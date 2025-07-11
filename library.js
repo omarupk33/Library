@@ -9,6 +9,11 @@ function Book(author, title, pages){
     this.id = crypto.randomUUID()
 }
 
+Book.prototype.readStatus = function(){
+    console.log(`Author's name: ${this.author} Book's name: ${this.title} Number of pages: ${this.pages}`)
+}
+
+
 function addBookToLibrary(book){
 if (!myLibrary.some(b => b.id === book.id)){
     myLibrary.push(book)
@@ -75,17 +80,23 @@ function add_to_table(book_obj){
     tr.className = 'tr'
 
     let btn = remove_btn()
-    btn.addEventListener('click', () => tr.remove()); 
-    for (const value of Object.values(book_obj)){
-        const td = document.createElement('td')
-        td.textContent = `${value}`
+    btn.addEventListener('click', () => tr.remove()) 
 
+    for (const key of Object.keys(book_obj)){
+        const td = document.createElement('td')
+
+        if (key === 'id'){
+            tr.setAttribute('data-index-number', `${book_obj[key]}`)
+        }
+        else{
+        td.textContent = `${book_obj[key]}`
+        console.log(book_obj[key])
         tr.appendChild(td)
         }
 
         tr.appendChild(btn)
-
-    Table.appendChild(tr)   
+        Table.appendChild(tr)   
+        }
     }
 
 //  Submit Button
